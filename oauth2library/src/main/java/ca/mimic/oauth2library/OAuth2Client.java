@@ -9,6 +9,7 @@ import okhttp3.OkHttpClient;
 public class OAuth2Client {
     private final String clientId;
     private final String clientSecret;
+    private final String responseType;
     private final String site;
     private final OkHttpClient okHttpClient;
 
@@ -24,6 +25,7 @@ public class OAuth2Client {
         this.username = builder.username;
         this.password = builder.password;
         this.clientId = builder.clientId;
+        this.responseType = builder.responseType;
         this.clientSecret = builder.clientSecret;
         this.site = builder.site;
         this.scope = builder.scope;
@@ -47,6 +49,8 @@ public class OAuth2Client {
     protected String getClientSecret() {
         return clientSecret;
     }
+
+    protected String getResponseType() { return responseType; }
 
     protected String getSite() {
         return site;
@@ -125,6 +129,7 @@ public class OAuth2Client {
         Map<String, String> oAuthParams = new HashMap<>();
         oAuthParams.put(Constants.POST_CLIENT_ID, getClientId());
         oAuthParams.put(Constants.POST_CLIENT_SECRET, getClientSecret());
+        oAuthParams.put(Constants.POST_RESPONSE_TYPE, getResponseType());
         oAuthParams.put(Constants.POST_GRANT_TYPE, getGrantType());
         oAuthParams.put(Constants.POST_SCOPE, getScope());
         oAuthParams.put(Constants.POST_USERNAME, getUsername());
@@ -135,6 +140,7 @@ public class OAuth2Client {
     public static class Builder {
         private final String clientId;
         private final String clientSecret;
+        private final String responseType;
         private final String site;
 
         private String scope;
@@ -147,20 +153,21 @@ public class OAuth2Client {
 
         private Map<String, String> parameters;
 
-        public Builder(String username, String password, String clientId, String clientSecret,
-                       String site) {
+        public Builder(String username, String password, String clientId, String clientSecret, String responseType, String site) {
             this.username = username;
             this.password = password;
             this.clientId = clientId;
             this.clientSecret = clientSecret;
+            this.responseType = responseType;
             this.site = site;
             this.okHttpClient = null;
         }
 
-        public Builder(String clientId, String clientSecret, String site) {
+        public Builder(String clientId, String clientSecret, String responseType, String site) {
             this.username = null;
             this.password = null;
             this.clientId = clientId;
+            this.responseType = responseType;
             this.clientSecret = clientSecret;
             this.site = site;
             this.okHttpClient = null;
